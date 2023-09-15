@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+<h1 class="text-center">Soccer PLayer Management</h1>
+
+<a role="button" class="btn btn-primary" href="/player/create">Add a new player</a>
+
+<form action="/player">
+    <input class="text-input" type="text" name="searchName" th:value="${searchName}">
+    <button class="btn btn-primary" type="submit">Search</button>
+</form>
+
+<table class="table">
+    <thead class="table-dark">
+    <tr>
+        <th> STT</th>
+        <th> Code</th>
+        <th> Name</th>
+        <th> Date of birth</th>
+        <th> Experience</th>
+        <th> Position</th>
+        <th> Image</th>
+        <th> Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="list,tr  : ${list}">
+        <tr>
+            <td th:text="${tr.count}"></td>
+            <td th:text="${list.code}"></td>
+            <td th:text="${list.name}"></td>
+            <td th:text="${list.dateOfBirth}"></td>
+            <td th:text="${list.experience}"></td>
+            <td th:text="${list.position}"></td>
+            <td><img style="width: 6rem; height: 6rem" th:src="${list.avatar}"></td>
+            <td>
+                <span style="display: flex">
+
+                      <a style="margin: 3%;" th:href="@{/player/edit/__${list.id}__}"
+                         data-toggle="tooltip" data-placement="top"
+                         title="Edit" class="label gradient-1 rounded">
+                         <i class="fa-solid fa-user-pen" style="color: #000000;"></i>
+                      </a>
+
+                    <button type="button" class="btn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                            th:attr="onclick= |confirmDelete('${list.name}','${list.id}')|">
+                            <i class="fa-solid fa-trash"></i>
+                    </button>
+                </span>
+            </td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+
+<div class="container" style="display: flex;justify-content: center">
+    <a th:if="${list.hasPrevious()}" th:href="@{/player/(page=${list.number-1},searchName=${searchName})}"
+       style="margin-right: 10px;">Previous</a>
+    <span th:text="${list.number+1}"></span>/<span th:text="${list.totalPages}"></span>
+    <a th:if="${list.hasNext()}" th:href="@{/player/(page=${list.number+1},searchName=${searchName})}"
+       style="margin-left: 10px;">Next</a>
+</div>
+
+<!-- Modal xóa-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="player/delete" method="get">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>Delete</b></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Do you want to delete Player:
+                        <span id="name"></span></p>
+                    <input type="text" hidden="hidden" name="id" id="id">
+                    <p style="color: red"><b>Warning</b> Action cannot return ? </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous">
+</script>
+<script>
+    //delete modal
+    function confirmDelete(name, id) {
+        document.getElementById("name").innerHTML = name;
+        document.getElementById("id").value = id;
+    }
+</script>
+</body>
+
+</html>

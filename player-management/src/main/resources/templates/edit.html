@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+<h1 class="text-center text-danger">Edit Soccer PLayer</h1>
+
+<a role="button" class="btn btn-primary" href="/player">Back to list</a>
+<div>
+    <fieldset>
+        <legend>Player Information</legend>
+        <form action="/player/create" th:object="${player}" method="post" , enctype="multipart/form-data">
+            <table class="table tab-content-area html-editor-align-center" style="width: 50%">
+                <tr>
+                    <th>Code</th>
+                    <td><input type="text" th:field="*{code}"></td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td><input type="text" th:field="*{name}"></td>
+                </tr>
+                <tr>
+                    <th>Birthday</th>
+                    <td><input type="date" th:field="*{dateOfBirth}"></td>
+                </tr>
+                <tr>
+                    <th>Experience</th>
+                    <td><input type="text" th:field="*{experience}"></td>
+                </tr>
+                <tr>
+                    <th>Position</th>
+                    <td><input type="text" th:field="*{position}"></td>
+                </tr>
+                <tr>
+                    <th class="col-lg-2 col-form-label">Avatar
+                        <span class="text-danger">*</span>
+                    </th>
+                    <td class="col-lg-6">
+                        <div id="image-preview-container1"><img style="margin: 2%; width: 10rem" th:src="*{avatar}"
+                                                                alt="Player's avatar">
+                            <input type="hidden" th:value="*{avatar}">
+                        </div>
+                        <input type="file" id="upload-file" multiple accept=".jpg, .jpeg, .png" onchange="limitFiles(this, 1)">
+                        <input name="imageAvatar" type="hidden" id="imageAvatar" th:field="*{avatar}">
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><input type="submit" value="Submit"></td>
+                </tr>
+            </table>
+        </form>
+    </fieldset>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous">
+</script>
+<script>
+    function limitFiles(input, maxFiles) {
+        if (input.files.length > maxFiles) {
+            alert(`Chỉ được chọn đúng ${maxFiles} tệp.`);
+            input.value = ""; // Xóa tệp đã chọn nếu vượt quá giới hạn
+        }
+    }
+
+    document.getElementById("upload-file").addEventListener("change", function (e) {
+        const container = document.getElementById("image-preview-container1");
+        container.innerHTML = "";
+
+        const maxFiles = 1;
+        const files = e.target.files;
+
+        if (files.length !== maxFiles) {
+            alert(`Bạn phải chọn đúng ${maxFiles} tệp.`);
+            e.target.value = "";
+            return;
+        }
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const img = document.createElement("img");
+            img.src = URL.createObjectURL(file);
+            img.style.width = "6rem"
+            img.style.height = "6rem"
+            img.style.margin = "7px";
+            container.appendChild(img);
+        }
+    });
+</script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
+<script type="module" src="/configuration-firebase.js"></script>
+<script type="module" src="/upload-file.js"></script>
+</body>
+
+</html>

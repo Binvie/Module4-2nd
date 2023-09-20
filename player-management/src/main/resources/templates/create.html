@@ -14,27 +14,35 @@
 <div>
     <fieldset>
         <legend>Player Information</legend>
-        <form action="/player/create" th:object="${player}" method="post" , enctype="multipart/form-data">
+        <form action="/player/create" th:object="${playerDto}" method="post" , enctype="multipart/form-data">
             <table class="table tab-content-area html-editor-align-center" style="width: 50%">
                 <tr>
                     <th>Code</th>
-                    <td><input type="text" th:field="*{code}"></td>
+                    <td><input type="text" th:field="*{code}" required></td>
+                    <div style="color: red"
+                         th:if="${#fields.hasErrors('code')}"
+                         th:errors="*{code}" class="form-text"></div>
                 </tr>
                 <tr>
                     <th>Name</th>
-                    <td><input type="text" th:field="*{name}"></td>
+                    <td><input type="text" th:field="*{name}" required></td>
                 </tr>
                 <tr>
                     <th>Birthday</th>
-                    <td><input type="date" th:field="*{dateOfBirth}"></td>
+                    <td><input type="date" th:field="*{dateOfBirth}" required></td>
                 </tr>
                 <tr>
                     <th>Experience</th>
-                    <td><input type="text" th:field="*{experience}"></td>
+                    <td><input type="text" th:field="*{experience}" required></td>
                 </tr>
                 <tr>
                     <th>Position</th>
-                    <td><input type="text" th:field="*{position}"></td>
+                    <td>
+                        <select class="form-control" id="gender" th:field="*{positionId}" >
+                            <option th:value="0">--Chọn--</option>
+                            <option th:each="list:${list}" th:text="${list.positionName}" th:value="${list.id}"></option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <th class="col-lg-2 col-form-label">Avatar

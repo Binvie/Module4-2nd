@@ -1,19 +1,14 @@
 package com.example.playermanagement.service;
 
+import com.example.playermanagement.dto.IPlayerDto;
+import com.example.playermanagement.dto.PlayerDto;
 import com.example.playermanagement.model.Player;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-public interface IPlayerService {
-    Page<Player> findAll(Pageable pageable, String name);
+public interface IPlayerService extends IGenerate<Player> {
 
-    void deletePlayer(int id);
-
-    void editPLayer(int id, Player player);
-
-    void save(Player player);
-
-    Player findPlayerById(int id);
+    Page<IPlayerDto> findAllPlayer(Pageable pageable, String name);
 }

@@ -8,17 +8,37 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
-<h1 class="text-center">Soccer PLayer Management</h1>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/player">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/player/create">Create</a>
+                </li>
+            </ul>
+            <form class="d-flex" action="/player">
+                <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search"
+                       th:value="${searchName}" name="name">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<h1 class="text-center ">Soccer PLayer Management</h1>
 
-<a role="button" class="btn btn-primary" href="/player/create">Add a new player</a>
+<!--<a role="button" class="btn btn-primary" href="/player/create">Add a new player</a>-->
 
-<form action="/player">
-    <input class="text-input" type="text" name="searchName" th:value="${searchName}">
-    <button class="btn btn-primary" type="submit">Search</button>
-</form>
+<!--<form action="/player">-->
+<!--    <input class="text-input" type="text" name="searchName" th:value="${searchName}">-->
+<!--    <button class="btn btn-primary" type="submit">Search</button>-->
+<!--</form>-->
 
 <table class="table">
-    <thead class="table-dark">
+    <thead class="table-success">
     <tr>
         <th> STT</th>
         <th> Code</th>
@@ -31,19 +51,19 @@
     </tr>
     </thead>
     <tbody>
-    <th:block th:each="list,tr  : ${list}">
+    <th:block th:each="list1,tr : ${list}">
         <tr>
             <td th:text="${tr.count}"></td>
-            <td th:text="${list.code}"></td>
-            <td th:text="${list.name}"></td>
-            <td th:text="${list.dateOfBirth}"></td>
-            <td th:text="${list.experience}"></td>
-            <td th:text="${list.position}"></td>
-            <td><img style="width: 6rem; height: 6rem" th:src="${list.avatar}"></td>
+            <td th:text="${list1.getCode()}"></td>
+            <td th:text="${list1.getName()}"></td>
+            <td th:text="${list1.getDateOfBirth()}"></td>
+            <td th:text="${list1.getExperience()}"></td>
+            <td th:text="${list1.getPositionName()}"></td>
+            <td><img style="width: 6rem; height: 6rem" th:src="${list1.getAvatar()}"></td>
             <td>
                 <span style="display: flex">
 
-                      <a style="margin: 3%;" th:href="@{/player/edit/__${list.id}__}"
+                      <a style="margin: 3%;" th:href="@{/player/edit/__${list1.getId()}__}"
                          data-toggle="tooltip" data-placement="top"
                          title="Edit" class="label gradient-1 rounded">
                          <i class="fa-solid fa-user-pen" style="color: #000000;"></i>
@@ -51,7 +71,7 @@
                     <button type="button" class="btn"
                             data-bs-toggle="modal"
                             data-bs-target="#exampleModal"
-                            th:attr="onclick= |confirmDelete('${list.name}',${list.id})|">
+                            th:attr="onclick= |confirmDelete('${list1.getName()}',${list1.getId()})|">
                             <i class="fa-solid fa-trash"></i>
                     </button>
                 </span>
@@ -70,6 +90,11 @@
        style="margin-left: 10px;">Next</a>
 </div>
 
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous">
+</script>
 <!-- Modal xóa/-->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -93,10 +118,6 @@
         </div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-        crossorigin="anonymous">
-</script>
 <script>
     //delete modal
     function confirmDelete(name, id) {
@@ -104,6 +125,7 @@
         document.getElementById("id").value = id;
     }
 </script>
+<footer th:replace="/layout :: footer"></footer>
 </body>
 
 </html>

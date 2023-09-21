@@ -8,4 +8,5 @@ public interface IPlayerDto {
     String getAvatar();
     String getDateOfBirth();
     String getPositionName();
+    String getTeamName();
 }

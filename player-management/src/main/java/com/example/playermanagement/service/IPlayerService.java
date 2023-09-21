@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface IPlayerService extends IGenerate<Player> {
 
-    Page<IPlayerDto> findAllPlayer(Pageable pageable, String name);
+    Page<Player> findAllPlayer(Pageable pageable, String name);
 }

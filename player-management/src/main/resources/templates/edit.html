@@ -14,11 +14,14 @@
 <div>
     <fieldset>
         <legend>Player Information</legend>
-        <form action="/player/create" th:object="${player}" method="post" , enctype="multipart/form-data">
+        <form action="/player/edit" th:object="${playerDto}" method="post" , enctype="multipart/form-data">
             <table class="table tab-content-area html-editor-align-center" style="width: 50%">
+                <input type="hidden" th:field="*{id}" name="id">
                 <tr>
                     <th>Code</th>
                     <td><input type="text" th:field="*{code}"></td>
+                    <div th:if="${#fields.hasErrors('code')}"
+                    th:errors="*{code}" class="form-text"></div>
                 </tr>
                 <tr>
                     <th>Name</th>
@@ -34,7 +37,11 @@
                 </tr>
                 <tr>
                     <th>Position</th>
-                    <td><input type="text" th:field="*{position}"></td>
+                    <td>
+                        <select th:field="*{position}">
+                            <option th:each="list:${list}" th:text="${list.positionName}" th:value="${list.id}"></option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <th class="col-lg-2 col-form-label">Avatar
@@ -45,7 +52,8 @@
                                                                 alt="Player's avatar">
                             <input type="hidden" th:value="*{avatar}">
                         </div>
-                        <input type="file" id="upload-file" multiple accept=".jpg, .jpeg, .png" onchange="limitFiles(this, 1)">
+                        <input type="file" id="upload-file" multiple accept=".jpg, .jpeg, .png"
+                               onchange="limitFiles(this, 1)">
                         <input name="imageAvatar" type="hidden" id="imageAvatar" th:field="*{avatar}">
                     </td>
                 </tr>

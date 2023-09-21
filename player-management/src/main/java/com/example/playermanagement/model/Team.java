@@ -15,14 +15,9 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Position {
+public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String positionName;
-
-    public Position(String positionName) {
-        this.positionName = positionName;
-    }
-
+    private String name;
 }

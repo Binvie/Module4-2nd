@@ -1,6 +1,7 @@
 package com.example.playermanagement.dto;
 
 import com.example.playermanagement.model.Position;
+import com.example.playermanagement.model.Team;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,22 +20,20 @@ import java.lang.annotation.Annotation;
 public class PlayerDto implements Validator {
     private int id;
     private String code;
-    @NotBlank
     private String name;
-    @NotBlank
     private String dateOfBirth;
-    @NotBlank
     private String experience;
-
     private String avatar;
-    private int positionId;
+    private Position position;
+    private Team team;
+
 
 
     @Override
     public boolean supports(Class<?> clazz) {
         return false;
     }
-    private final String CODE = "^CT-/d{1,2}$";
+    private final String CODE = "^CT-\\d{1,2}$";
     @Override
     public void validate(Object target, Errors errors) {
         PlayerDto playerDto = (PlayerDto) target;

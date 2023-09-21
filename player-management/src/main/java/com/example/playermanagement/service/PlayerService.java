@@ -2,7 +2,6 @@ package com.example.playermanagement.service;
 
 
 import com.example.playermanagement.dto.IPlayerDto;
-import com.example.playermanagement.dto.PlayerDto;
 import com.example.playermanagement.model.Player;
 import com.example.playermanagement.repository.IPlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ public class PlayerService implements IPlayerService {
     private IPlayerRepository playerRepository;
 
     @Override
-    public Page<IPlayerDto> findAllPlayer(Pageable pageable, String name) {
+    public Page<Player> findAllPlayer(Pageable pageable, String name) {
         return playerRepository.findAllPlayer(pageable, "%" + name + "%");
     }
 

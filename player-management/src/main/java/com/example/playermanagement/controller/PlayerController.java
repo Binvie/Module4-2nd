@@ -7,6 +7,7 @@ import com.example.playermanagement.model.Player;
 import com.example.playermanagement.model.Position;
 import com.example.playermanagement.service.IPlayerService;
 import com.example.playermanagement.service.IPositionService;
+import com.example.playermanagement.service.ITeamService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,8 @@ public class PlayerController {
     private IPlayerService playerService;
     @Autowired
     private IPositionService positionService;
+    @Autowired
+    private ITeamService teamService;
 
 
     @GetMapping("")
@@ -37,7 +40,7 @@ public class PlayerController {
                            @RequestParam(defaultValue = "", required = false) String name,
                            Model model) {
         Pageable pageable = PageRequest.of(page, 3);
-        Page<IPlayerDto> playerDto = playerService.findAllPlayer(pageable, name);
+        Page<Player> playerDto = playerService.findAllPlayer(pageable, name);
         model.addAttribute("list", playerDto);
         model.addAttribute("searchName", name);
         return "/view";
@@ -55,36 +58,52 @@ public class PlayerController {
         PlayerDto playerDto = new PlayerDto();
         List<Position> positionList = positionService.findAll();
         model.addAttribute("playerDto", playerDto);
-        model.addAttribute("list", positionList);
+        model.addAttribute("teamList", teamService.findAll());
+        model.addAttribute("positionList", positionList);
         return "/create";
     }
 
     @PostMapping("/create")
-    public String createPlayer(@Validated PlayerDto playerDto, BindingResult bindingResult,
+    public String createPlayer(@Valid @ModelAttribute PlayerDto playerDto, BindingResult bindingResult,
                                Model model) {
-        playerDto.validate(playerDto, bindingResult);
+       new PlayerDto().validate(playerDto, bindingResult);
+        List<Position> positionList = positionService.findAll();
         if (bindingResult.hasErrors()) {
+            model.addAttribute("positionList", positionList);
             return "/create";
         }
         Player player = new Player();
         BeanUtils.copyProperties(playerDto, player);
-        player.setPosition(new Position(playerDto.getPositionId()));
         playerService.save(player);
         return "redirect:/player";
 
     }
 
     @GetMapping("/edit/{id}")
-    public String editPlayerForm(@PathVariable int id, Model model) {
-//        Player player = playerService.findPlayerById(id);
-//        model.addAttribute("player", player);
+    public String editPlayerForm( @PathVariable int id, Model model) {
+        Player player = playerService.findById(id).get();
+        PlayerDto playerDto = new PlayerDto();
+        BeanUtils.copyProperties(player,playerDto);
+        List<Position> list = positionService.findAll();
+        model.addAttribute("playerDto",playerDto);
+        model.addAttribute("list",list);
+        model.addAttribute("title","Edit Player");
         return "/edit";
     }
 
     @PostMapping("/edit")
-    public String editPlayer(RedirectAttributes redirectAttributes, Player player) {
-//        playerService.save(player);
+    public String editPlayer(@Validated PlayerDto playerDto, RedirectAttributes redirectAttributes,
+                             @RequestParam int id,BindingResult bindingResult, Model model) {
+       new PlayerDto().validate(playerDto,bindingResult);
+        if (bindingResult.hasErrors()){
+            List<Position> list = positionService.findAll();
+            model.addAttribute("list",list);
+            return "/edit";
+        }
+        Player player = playerService.findById(id).get();
+        BeanUtils.copyProperties(playerDto , player);
+        playerService.save(player);
         redirectAttributes.addFlashAttribute("mess", "Edit successfully!");
-        return "redirect:/view";
+        return "redirect:/player";
     }
 }

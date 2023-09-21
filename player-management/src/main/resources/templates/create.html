@@ -32,15 +32,24 @@
                     <td><input type="date" th:field="*{dateOfBirth}" required></td>
                 </tr>
                 <tr>
+                    <th>Position</th>
+                    <td>
+                        <select class="form-control" th:field="*{team}" >
+                            <option th:value="0">--Chọn--</option>
+                            <option th:each="list:${teamList}" th:text="${list.name}" th:value="${list.id}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
                     <th>Experience</th>
                     <td><input type="text" th:field="*{experience}" required></td>
                 </tr>
                 <tr>
                     <th>Position</th>
                     <td>
-                        <select class="form-control" id="gender" th:field="*{positionId}" >
+                        <select class="form-control" id="gender" th:field="*{position}" >
                             <option th:value="0">--Chọn--</option>
-                            <option th:each="list:${list}" th:text="${list.positionName}" th:value="${list.id}"></option>
+                            <option th:each="list:${positionList}" th:text="${list.positionName}" th:value="${list.id}"></option>
                         </select>
                     </td>
                 </tr>
@@ -49,7 +58,7 @@
                         <span class="text-danger">*</span>
                     </th>
                     <td class="col-lg-6">
-                        <div id="image-preview-container1"><img style="margin: 2%; width: 10rem" th:src="*{avatar}"
+                        <div id="image-preview-container1"><img style="margin: 2%; width: 7rem; height: 10rem" th:src="*{avatar}"
                                  alt="Player's avatar">
                             <input type="hidden" th:value="*{avatar}">
                         </div>

@@ -24,4 +24,9 @@ public class Player {
     @ManyToOne
     @JoinColumn(name = "position_id")
     private Position position;
+
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
+
 }

@@ -32,6 +32,14 @@
                     <td><input type="date" th:field="*{dateOfBirth}"></td>
                 </tr>
                 <tr>
+                    <th>Team</th>
+                    <td>
+                        <select th:field="*{team}">
+                            <option th:each="teamList:${teamList}" th:text="${teamList.name}" th:value="${teamList.id}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
                     <th>Experience</th>
                     <td><input type="text" th:field="*{experience}"></td>
                 </tr>

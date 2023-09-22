@@ -14,6 +14,6 @@ import java.util.List;
 @Repository
 public interface IPlayerRepository  extends JpaRepository<Player,Integer> {
     @Query(value = "select * " +
-            "from player " ,nativeQuery = true)
+            "from player where name like :name " ,nativeQuery = true)
     Page<Player> findAllPlayer(Pageable pageable, @Param("name")String name);
 }

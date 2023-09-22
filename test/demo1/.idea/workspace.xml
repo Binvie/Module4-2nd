@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3a7b6773-c0e9-4d79-94b3-342f7c9eb2dd" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../demo/src/main/java/com/example/demo/controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demo/src/main/java/com/example/demo/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demo/src/main/resources/templates/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demo/src/main/resources/templates/result.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../player-management/src/main/java/com/example/playermanagement/controller/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../player-management/src/main/java/com/example/playermanagement/controller/PlayerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../player-management/src/main/java/com/example/playermanagement/repository/IPlayerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../player-management/src/main/java/com/example/playermanagement/repository/IPlayerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../player-management/src/main/resources/templates/create.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../player-management/src/main/resources/templates/create.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../player-management/src/main/resources/templates/edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../player-management/src/main/resources/templates/edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../player-management/src/main/resources/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../player-management/src/main/resources/templates/layout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../player-management/src/main/resources/templates/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../player-management/src/main/resources/templates/view.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="2VkFKioqvyFtmdmWgDjeN4Xp2Zb" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3a7b6773-c0e9-4d79-94b3-342f7c9eb2dd" name="Changes" comment="" />
+      <created>1695372110597</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1695372110597</updated>
+      <workItem from="1695372111606" duration="47000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

@@ -18,31 +18,36 @@
             <table class="table tab-content-area html-editor-align-center" style="width: 50%">
                 <tr>
                     <th>Code</th>
-                    <td><input type="text" th:field="*{code}" required></td>
+                    <td><input type="text" th:field="*{code}" ></td>
                     <div style="color: red"
                          th:if="${#fields.hasErrors('code')}"
                          th:errors="*{code}" class="form-text"></div>
                 </tr>
                 <tr>
                     <th>Name</th>
-                    <td><input type="text" th:field="*{name}" required></td>
+                    <td><input type="text" th:field="*{name}" ></td>
+                    <div style="color: red;" th:if="${#fields.hasErrors('name')}"
+                            th:errors="*{name}"></div>
                 </tr>
                 <tr>
                     <th>Birthday</th>
-                    <td><input type="date" th:field="*{dateOfBirth}" required></td>
+                    <td><input type="date" th:field="*{dateOfBirth}" ></td>
+                    <div style="color: red;" th:if="${#fields.hasErrors('dateOfBirth')}"
+                         th:errors="*{dateOfBirth}"></div>
                 </tr>
                 <tr>
-                    <th>Position</th>
+                    <th>Team</th>
                     <td>
                         <select class="form-control" th:field="*{team}" >
                             <option th:value="0">--Chọn--</option>
                             <option th:each="list:${teamList}" th:text="${list.name}" th:value="${list.id}"></option>
                         </select>
+
                     </td>
                 </tr>
                 <tr>
                     <th>Experience</th>
-                    <td><input type="text" th:field="*{experience}" required></td>
+                    <td><input type="text" th:field="*{experience}" ></td>
                 </tr>
                 <tr>
                     <th>Position</th>

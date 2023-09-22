@@ -43,6 +43,7 @@ public class PlayerController {
         Page<Player> playerDto = playerService.findAllPlayer(pageable, name);
         model.addAttribute("list", playerDto);
         model.addAttribute("searchName", name);
+        model.addAttribute("title", "Overview");
         return "/view";
     }
 
@@ -70,6 +71,7 @@ public class PlayerController {
         List<Position> positionList = positionService.findAll();
         if (bindingResult.hasErrors()) {
             model.addAttribute("positionList", positionList);
+            model.addAttribute("teamList", teamService.findAll());
             return "/create";
         }
         Player player = new Player();
@@ -86,6 +88,7 @@ public class PlayerController {
         BeanUtils.copyProperties(player,playerDto);
         List<Position> list = positionService.findAll();
         model.addAttribute("playerDto",playerDto);
+        model.addAttribute("teamList", teamService.findAll());
         model.addAttribute("list",list);
         model.addAttribute("title","Edit Player");
         return "/edit";
@@ -98,6 +101,7 @@ public class PlayerController {
         if (bindingResult.hasErrors()){
             List<Position> list = positionService.findAll();
             model.addAttribute("list",list);
+            model.addAttribute("teamList", teamService.findAll());
             return "/edit";
         }
         Player player = playerService.findById(id).get();

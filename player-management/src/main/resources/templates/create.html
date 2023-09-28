@@ -18,43 +18,43 @@
             <table class="table tab-content-area html-editor-align-center" style="width: 50%">
                 <tr>
                     <th>Code</th>
-                    <td><input type="text" th:field="*{code}" ></td>
-                    <div style="color: red"
-                         th:if="${#fields.hasErrors('code')}"
+                    <input type="hidden" th:field="*{status == 0}">
+                    <td><input type="text" th:field="*{code}"></td>
+                    <div style="color: red" th:if="${#fields.hasErrors('code')}"
                          th:errors="*{code}" class="form-text"></div>
                 </tr>
                 <tr>
                     <th>Name</th>
-                    <td><input type="text" th:field="*{name}" ></td>
+                    <td><input type="text" th:field="*{name}"></td>
                     <div style="color: red;" th:if="${#fields.hasErrors('name')}"
-                            th:errors="*{name}"></div>
+                         th:errors="*{name}"></div>
                 </tr>
                 <tr>
                     <th>Birthday</th>
-                    <td><input type="date" th:field="*{dateOfBirth}" ></td>
+                    <td><input type="date" th:field="*{dateOfBirth}"></td>
                     <div style="color: red;" th:if="${#fields.hasErrors('dateOfBirth')}"
                          th:errors="*{dateOfBirth}"></div>
                 </tr>
                 <tr>
                     <th>Team</th>
                     <td>
-                        <select class="form-control" th:field="*{team}" >
+                        <select class="form-control" th:field="*{team}">
                             <option th:value="0">--Chọn--</option>
                             <option th:each="list:${teamList}" th:text="${list.name}" th:value="${list.id}"></option>
                         </select>
-
                     </td>
                 </tr>
                 <tr>
                     <th>Experience</th>
-                    <td><input type="text" th:field="*{experience}" ></td>
+                    <td><input type="text" th:field="*{experience}"></td>
                 </tr>
                 <tr>
                     <th>Position</th>
                     <td>
-                        <select class="form-control" id="gender" th:field="*{position}" >
+                        <select class="form-control" id="gender" th:field="*{position}">
                             <option th:value="0">--Chọn--</option>
-                            <option th:each="list:${positionList}" th:text="${list.positionName}" th:value="${list.id}"></option>
+                            <option th:each="list:${positionList}" th:text="${list.positionName}"
+                                    th:value="${list.id}"></option>
                         </select>
                     </td>
                 </tr>
@@ -63,11 +63,13 @@
                         <span class="text-danger">*</span>
                     </th>
                     <td class="col-lg-6">
-                        <div id="image-preview-container1"><img style="margin: 2%; width: 7rem; height: 10rem" th:src="*{avatar}"
-                                 alt="Player's avatar">
+                        <div id="image-preview-container1"><img style="margin: 2%; width: 7rem; height: 10rem"
+                                                                th:src="*{avatar}"
+                                                                alt="Player's avatar">
                             <input type="hidden" th:value="*{avatar}">
                         </div>
-                        <input type="file" id="upload-file" multiple accept=".jpg, .jpeg, .png" onchange="limitFiles(this, 1)">
+                        <input type="file" id="upload-file" multiple accept=".jpg, .jpeg, .png"
+                               onchange="limitFiles(this, 1)">
                         <input name="imageAvatar" type="hidden" id="imageAvatar" th:field="*{avatar}">
                     </td>
                 </tr>

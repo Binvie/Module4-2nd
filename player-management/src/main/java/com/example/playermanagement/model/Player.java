@@ -21,6 +21,7 @@ public class Player {
     private String dateOfBirth;
     private String experience;
     private String avatar;
+    private int status;
     @ManyToOne
     @JoinColumn(name = "position_id")
     private Position position;

@@ -34,16 +34,24 @@ public class PlayerController {
     @Autowired
     private ITeamService teamService;
 
+    @GetMapping("/player/detail/{id}")
+    public String showDetailForm(@PathVariable int id, Model model) {
+        Player player = playerService.findById(id).get();
+        model.addAttribute("title", "Overview");
+        model.addAttribute("player", player );
+        return "/detail";
+    }
 
     @GetMapping("")
     public String showList(@RequestParam(defaultValue = "0", required = false) int page,
                            @RequestParam(defaultValue = "", required = false) String name,
                            Model model) {
-        Pageable pageable = PageRequest.of(page, 3);
+        Pageable pageable = PageRequest.of(page, 8);
         Page<Player> playerDto = playerService.findAllPlayer(pageable, name);
         model.addAttribute("list", playerDto);
         model.addAttribute("searchName", name);
         model.addAttribute("title", "Overview");
+        model.addAttribute("teamList", teamService.findAll());
         return "/view";
     }
 
@@ -65,9 +73,9 @@ public class PlayerController {
     }
 
     @PostMapping("/create")
-    public String createPlayer(@Valid @ModelAttribute PlayerDto playerDto, BindingResult bindingResult,
+    public String createPlayer(@Valid PlayerDto playerDto, BindingResult bindingResult,
                                Model model) {
-       new PlayerDto().validate(playerDto, bindingResult);
+        new PlayerDto().validate(playerDto, bindingResult);
         List<Position> positionList = positionService.findAll();
         if (bindingResult.hasErrors()) {
             model.addAttribute("positionList", positionList);
@@ -82,32 +90,58 @@ public class PlayerController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editPlayerForm( @PathVariable int id, Model model) {
+    public String editPlayerForm(@PathVariable int id, Model model) {
         Player player = playerService.findById(id).get();
         PlayerDto playerDto = new PlayerDto();
-        BeanUtils.copyProperties(player,playerDto);
+        BeanUtils.copyProperties(player, playerDto);
         List<Position> list = positionService.findAll();
-        model.addAttribute("playerDto",playerDto);
+        model.addAttribute("playerDto", playerDto);
         model.addAttribute("teamList", teamService.findAll());
-        model.addAttribute("list",list);
-        model.addAttribute("title","Edit Player");
+        model.addAttribute("list", list);
+        model.addAttribute("title", "Edit Player");
         return "/edit";
     }
 
     @PostMapping("/edit")
     public String editPlayer(@Validated PlayerDto playerDto, RedirectAttributes redirectAttributes,
-                             @RequestParam int id,BindingResult bindingResult, Model model) {
-       new PlayerDto().validate(playerDto,bindingResult);
-        if (bindingResult.hasErrors()){
+                             @RequestParam int id, BindingResult bindingResult, Model model) {
+        new PlayerDto().validate(playerDto, bindingResult);
+        if (bindingResult.hasErrors()) {
             List<Position> list = positionService.findAll();
-            model.addAttribute("list",list);
+            model.addAttribute("list", list);
             model.addAttribute("teamList", teamService.findAll());
             return "/edit";
         }
         Player player = playerService.findById(id).get();
-        BeanUtils.copyProperties(playerDto , player);
+        BeanUtils.copyProperties(playerDto, player);
         playerService.save(player);
         redirectAttributes.addFlashAttribute("mess", "Edit successfully!");
         return "redirect:/player";
+    }
+
+    @GetMapping("/playing")
+    public String setStatus(@RequestParam("id1") int id) {
+        Player player = playerService.findById(id).get();
+        if (player.getStatus() == 1) {
+            player.setStatus(0);
+            List<Player> list = playerService.findAll();
+            list.set(id,player);
+            return "redirect:/player";
+        } else if (player.getStatus() == 0) {
+            player.setStatus(1);
+            return "redirect:/player";
+        }
+        return "redirect:/player";
+    }
+
+    @GetMapping("/error")
+    public String showForm() {
+        return "/404";
+    }
+
+    @GetMapping("/count")
+    public String showCount(@PathVariable int id) {
+
+        return "/view";
     }
 }

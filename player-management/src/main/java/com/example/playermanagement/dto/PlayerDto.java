@@ -38,6 +38,8 @@ public class PlayerDto implements Validator {
     @NotNull
     private String avatar;
 
+    private int status;
+
     private Position position;
 
     private Team team;
@@ -67,10 +69,10 @@ public class PlayerDto implements Validator {
             errors.rejectValue("code", null, "Code Regex: CT-XX (X: 0-9)");
         }
         if (!playerDto.name.matches(NAME)) {
-            errors.rejectValue("name", null, "Uppercase first letter");
+            errors.rejectValue("name", null, "Name must be uppercase first letter");
         }
         if (!playerDto.isValidDate()){
-            errors.rejectValue("dateOfBirth", null,"Must be greater than 18 and less than 60");
+            errors.rejectValue("dateOfBirth", null,"birthday should be greater than 18 and less than 60");
         }
     }
 }

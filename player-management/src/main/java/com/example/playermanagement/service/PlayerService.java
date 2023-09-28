@@ -24,7 +24,7 @@ public class PlayerService implements IPlayerService {
 
     @Override
     public List<Player> findAll() {
-        return null;
+        return playerRepository.findAll();
     }
 
     @Override

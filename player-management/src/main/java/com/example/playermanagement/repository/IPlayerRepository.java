@@ -23,7 +23,7 @@ public interface IPlayerRepository  extends JpaRepository<Player,Integer> {
             "from player\n" +
             "join team as t on t.id = player.team_id\n" +
             "where t.name = :team",nativeQuery = true)
-    int numberPlayer(@Param("team") String name);
+    int countPlayer(@Param("team") String name);
 
     @Transactional
     @Modifying

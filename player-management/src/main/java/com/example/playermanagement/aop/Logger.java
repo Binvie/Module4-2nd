@@ -19,7 +19,7 @@ public class Logger {
     public void countPlayer(JoinPoint joinPoint){
         Object[] args = joinPoint.getArgs();
         PlayerDto playerDto = (PlayerDto) args[0];
-        int count = playerRepository.numberPlayer(playerDto.getTeam().getName());
+        int count = playerRepository.countPlayer(playerDto.getTeam().getName());
         System.out.println(count);
     }
 }

@@ -21,6 +21,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -35,17 +37,23 @@ public class PlayerController {
     private ITeamService teamService;
 
     @GetMapping("/player/detail/{id}")
-    public String showDetailForm(@PathVariable int id, Model model) {
+    public String showDetailForm(@PathVariable int id, HttpServletResponse httpServletResponse, Model model) {
         Player player = playerService.findById(id).get();
+        Cookie cookie = new Cookie("PlayerId", id +"");
+        cookie.setMaxAge(30);
+        cookie.setPath("/");
+        httpServletResponse.addCookie(cookie);
         model.addAttribute("title", "Overview");
         model.addAttribute("player", player );
         return "/detail";
     }
 
     @GetMapping("")
-    public String showList(@RequestParam(defaultValue = "0", required = false) int page,
+    public String showList(@CookieValue(defaultValue = "-1",required = false) int id ,
+                            @RequestParam(defaultValue = "0", required = false) int page,
                            @RequestParam(defaultValue = "", required = false) String name,
                            Model model) {
+        Player player = playerService.findById(id).get();
         Pageable pageable = PageRequest.of(page, 8);
         Page<Player> playerDto = playerService.findAllPlayer(pageable, name);
         model.addAttribute("list", playerDto);

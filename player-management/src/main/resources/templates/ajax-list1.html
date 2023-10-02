@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../static/code.jquery.com_jquery-3.7.1.min.js"></script>
+</head>
+<body>
+<h1> Player Management</h1>
+
+<input type="text" id="name">
+<button id="btn-show">Show</button>
+<button id="btn-send">Send</button>
+<script>
+    $(document).ready(function (){
+        $("#btn-send").click(function (){
+            let name = $("#name").val();
+            alert(name);
+        })
+        $("#btn-show").click(function (){
+            $("#name").toggle();
+        })
+    })
+</script>
+</body>
+</html>

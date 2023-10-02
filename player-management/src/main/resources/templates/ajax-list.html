@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../static/code.jquery.com_jquery-3.7.1.min.js"></script>
+</head>
+<body>
+<h1> Player Management</h1>
+
+<table>
+    <thead>
+    <tr>
+        <td>STT</td>
+        <td>Name</td>
+        <td>Code</td>
+        <td>Day of birth</td>
+        <td>Team</td>
+        <td>Experience</td>
+        <td>Position</td>
+    </tr>
+    </thead>
+    <tbody id="content">
+    </tbody>
+</table>
+<br>
+<button id="btn-more">...More</button>
+<br>
+<h3>Create new Player</h3>
+<br>
+<input type="text" id="name" placeholder="Enter Name"><br>
+<input type="text" id="code" placeholder="Enter Code"><br>
+<input type="date" id="dateOfBirth" placeholder="Enter Day of birth"><br>
+<select id="team_id">
+    <option value="1">Anh</option>
+    <option value="2">Mĩ</option>
+    <option value="3">Pháp</option>
+    <option value="4">Việt Nam</option>
+    <option value="5">Thái Lan</option>
+</select><br>
+<select id="position_id">
+    <option value="7">Trung vệ</option>
+    <option value="8">Hậu vệ biên</option>
+    <option value="9">Hậu vệ tấn công</option>
+    <option value="10">Tiền đạo</option>
+    <option value="11">Tiền vệ phòng ngự</option>
+    <option value="12">Tiền vệ trung tâm</option>
+    <option value="13">Thủ môn</option>
+</select><br>
+<input type="text" id="experience" placeholder="Enter Experience"><br>
+<input type="text" id="position" placeholder="Enter Position"><br>
+<button id="btn-save">Save</button>
+<script>
+
+    $(document).ready(function () {
+        $("#btn-save").click(function () {
+            let name = $("#name").val();
+            let code = $("#code").val();
+            let dateOfBirth = $("#dateOfBirth").val();
+            let team_id = $("#team_id").val();
+            let experience = $("#experience").val();
+            let position = $("#position").val();
+            const player = {
+                name: name,
+                code: code,
+                dateOfBirth: dateOfBirth,
+                team: {
+                    id: team_id,
+                },
+                experience: experience,
+                position: {
+                    id: position
+                },
+            }
+            add(player);
+        })
+        $("input").val('')
+        $("select").val('')
+    })
+
+    function add(player) {
+        $.ajax({
+            contentType: "application/json",
+            method: "POST",
+            dataType: "json",
+            data: JSON.stringify(player),
+            url: `http://localhost:8080/api/players/add`,
+            success: function (data) {
+                display();
+            }
+        })
+    }
+
+
+    let page = 0;
+    $(document).ready(function () {
+        setTimeout(display, 1000);
+        $("#btn-more").click(function () {
+            display();
+        })
+
+    })
+
+    function display() {
+        let content = "";
+        let count = 1;
+        $.ajax({
+            contentType: "application/json",
+            method: "GET",
+            url: `http://localhost:8080/api/players?page=${page++}`,
+            success: function (data) {
+                console.log(data);
+                let dataPage = data.content;
+                for (let i = 0; i < dataPage.length; i++) {
+                    content += `<tr>
+                                    <td>${count}</td>
+                                    <td>${dataPage[i].name}</td>
+                                    <td>${dataPage[i].code}</td>
+                                    <td>${dataPage[i].dateOfBirth}</td>
+                                    <td>${dataPage[i].team.name}</td>
+                                    <td>${dataPage[i].experience}</td>
+                                    <td>${dataPage[i].position.positionName}</td>
+                                </tr>`;
+                    count++;
+                }
+                count++;
+                $("#content").append(content);
+            },
+            catch: function () {
+                console.log('lỗi')
+            }
+        })
+    }
+</script>
+</body>
+</html>
